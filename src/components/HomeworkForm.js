@@ -6,13 +6,16 @@ import {
   makeStyles,
   Button,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
   form: {
@@ -26,8 +29,17 @@ export default function HomeworkForm(props) {
   const [description, setDescription] = useState("");
   const [estimatedDuration, setEstimatedDuration] = useState(0);
   const [dueDate, setDueDate] = useState(new Date());
+  // temp
+  const [users, setUsers] = useState([]);
+
+  //Theme stuff
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
+
+  useEffect(() => {
+    setUsers(["Test User"]);
+    setUsername("Test User");
+  }, []);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -44,13 +56,15 @@ export default function HomeworkForm(props) {
   return (
     <div className={classes.form}>
       <form onSubmit={onSubmit} style={{ maxWidth: "460px" }}>
-        <FormControl fullWidth margin="normal">
-          <TextField
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            label={"Username"}
-            required={true}
-          />
+        <FormControl fullWidth margin="dense">
+          <Select value={username} onChange={e => setUsername(e.target.value)}>
+            {users.length > 0 &&
+              users.map(user => (
+                <MenuItem key={user} value={user}>
+                  {user}
+                </MenuItem>
+              ))}
+          </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <TextField
