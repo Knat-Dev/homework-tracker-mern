@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Nav/Navbar";
+import Dashboard from "./components/Dashboard";
+import AddHomework from "./components/AddHomework";
+import CreateUser from "./components/CreateUser";
+import EditHomework from "./components/EditHomework";
+import { Container } from "@material-ui/core";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Container style={{ marginTop: "1rem" }}>
+        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/edit/:id" component={EditHomework} />
+        <Route exact path="/add-homework" component={AddHomework} />
+        <Route exact path="/user/create" component={CreateUser} />
+      </Container>
+    </BrowserRouter>
   );
 }
 
