@@ -28,9 +28,22 @@ export default function HomeworkForm(props) {
   const [dueDate, setDueDate] = useState(new Date());
   const theme = useTheme();
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const onSubmit = e => {
+    e.preventDefault();
+    props.onSubmit(
+      props.onSubmit({
+        username,
+        description,
+        estimatedDuration,
+        dueDate
+      })
+    );
+  };
+
   return (
     <div className={classes.form}>
-      <form onSubmit={props.onSubmit} style={{ maxWidth: "460px" }}>
+      <form onSubmit={onSubmit} style={{ maxWidth: "460px" }}>
         <FormControl fullWidth margin="normal">
           <TextField
             value={username}
@@ -50,8 +63,12 @@ export default function HomeworkForm(props) {
         <FormControl fullWidth margin="normal">
           <TextField
             value={estimatedDuration}
-            onChange={e => setEstimatedDuration(e.target.value)}
-            label={"Estimated Duration"}
+            onChange={e =>
+              setEstimatedDuration(
+                e.target.value !== "" ? parseInt(e.target.value) : 0
+              )
+            }
+            label={"Estimated Duration (Minutes)"}
             required={true}
           />
         </FormControl>
@@ -68,7 +85,7 @@ export default function HomeworkForm(props) {
           </MuiPickersUtilsProvider>
         </FormControl>
         <FormControl fullWidth margin="normal">
-          <Button color="primary" variant="contained" fullWidth>
+          <Button type="submit" color="primary" variant="contained" fullWidth>
             Submit
           </Button>
         </FormControl>

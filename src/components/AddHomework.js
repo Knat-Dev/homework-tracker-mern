@@ -18,7 +18,9 @@ const useStyles = makeStyles({
 
 export default function AddHomework() {
   const classes = useStyles();
-  const onSubmit = () => {};
+  const onSubmit = homework => {
+    console.log(homework);
+  };
   return (
     <div className={classes.fullScreen}>
       <Card elevation={6}>
