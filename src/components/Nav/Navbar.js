@@ -96,7 +96,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <IconButton onClick={toggleDrawer} color={"primary"}>
+            <IconButton onClick={toggleDrawer}>
               <MenuIcon />
             </IconButton>
             <SwipeableDrawer

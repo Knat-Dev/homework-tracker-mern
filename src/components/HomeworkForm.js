@@ -16,6 +16,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useEffect } from "react";
+import Axios from "axios";
 
 const useStyles = makeStyles({
   form: {
@@ -27,7 +28,7 @@ export default function HomeworkForm(props) {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
-  const [estimatedDuration, setEstimatedDuration] = useState(0);
+  const [estimatedDuration, setEstimatedDuration] = useState("0");
   const [dueDate, setDueDate] = useState(new Date());
   // temp
   const [users, setUsers] = useState([]);
@@ -37,8 +38,14 @@ export default function HomeworkForm(props) {
   const matchesDesktop = useMediaQuery(theme.breakpoints.up("sm"));
 
   useEffect(() => {
-    setUsers(["Test User"]);
-    setUsername("Test User");
+    async function fetchUsers() {
+      await Axios.get("http://localhost:4000/users").then(res => {
+        console.log(res.data);
+        setUsers(res.data);
+        setUsername(res.data[0].username);
+      });
+    }
+    fetchUsers();
   }, []);
 
   const onSubmit = e => {
@@ -47,7 +54,8 @@ export default function HomeworkForm(props) {
       props.onSubmit({
         username,
         description,
-        estimatedDuration,
+        estimatedDurationMinutes:
+          estimatedDuration === null ? 0 : estimatedDuration,
         dueDate
       })
     );
@@ -60,8 +68,8 @@ export default function HomeworkForm(props) {
           <Select value={username} onChange={e => setUsername(e.target.value)}>
             {users.length > 0 &&
               users.map(user => (
-                <MenuItem key={user} value={user}>
-                  {user}
+                <MenuItem key={user._id} value={user.username}>
+                  {user.username}
                 </MenuItem>
               ))}
           </Select>
@@ -77,11 +85,7 @@ export default function HomeworkForm(props) {
         <FormControl fullWidth margin="normal">
           <TextField
             value={estimatedDuration}
-            onChange={e =>
-              setEstimatedDuration(
-                e.target.value !== "" ? parseInt(e.target.value) : 0
-              )
-            }
+            onChange={e => setEstimatedDuration(e.target.value)}
             label={"Estimated Duration (Minutes)"}
             required={true}
           />

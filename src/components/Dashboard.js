@@ -1,10 +1,18 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Card, CardContent } from "@material-ui/core";
+import HomeworkTable from "./HomeworkTable";
 
 export default function Dashboard() {
   return (
-    <div>
-      <Typography variant="h4">List of Homework:</Typography>
+    <div style={{ margin: "4rem" }}>
+      <Typography align="center" variant="h4" style={{ padding: "2rem 0" }}>
+        List of Homework
+      </Typography>
+      <Card>
+        <CardContent>
+          <HomeworkTable />
+        </CardContent>
+      </Card>
     </div>
   );
 }

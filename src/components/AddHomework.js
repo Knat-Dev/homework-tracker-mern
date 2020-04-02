@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, makeStyles, Card, CardContent } from "@material-ui/core";
 import HomeworkForm from "./HomeworkForm";
+import Axios from "axios";
 
 const useStyles = makeStyles({
   fullScreen: {
@@ -18,9 +19,15 @@ const useStyles = makeStyles({
 
 export default function AddHomework(props) {
   const classes = useStyles();
+
   const onSubmit = homework => {
     console.log(homework);
-    props.history.push("/");
+    Axios.post("http://localhost:4000/homework/add", homework)
+      .then(res => {
+        console.log(res.data);
+        props.history.push("/");
+      })
+      .catch(e => console.error(e));
   };
 
   return (
@@ -28,7 +35,7 @@ export default function AddHomework(props) {
       <Card elevation={6}>
         <CardContent>
           <Typography variant="h4" className={classes.title}>
-            Add Homework:
+            Add Homework
           </Typography>
           <HomeworkForm onSubmit={onSubmit} />
         </CardContent>
