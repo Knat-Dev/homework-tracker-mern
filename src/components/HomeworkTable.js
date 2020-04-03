@@ -53,8 +53,8 @@ export default function HomeworkTable() {
             <TableRow>
               <TableCell>Description</TableCell>
               <TableCell>Username</TableCell>
-              <TableCell align="right">Estimated Duration</TableCell>
-              <TableCell align="right">Due Date</TableCell>
+              <TableCell>Estimated Duration</TableCell>
+              <TableCell>Due Date</TableCell>
               <TableCell align="right">Delete</TableCell>
             </TableRow>
           </TableHead>
@@ -66,10 +66,8 @@ export default function HomeworkTable() {
                     {hw.description}
                   </TableCell>
                   <TableCell>{hw.username}</TableCell>
-                  <TableCell align="right">
-                    {hw.estimatedDurationMinutes}
-                  </TableCell>
-                  <TableCell align="right">
+                  <TableCell>{hw.estimatedDurationMinutes}</TableCell>
+                  <TableCell>
                     {moment(hw.dueDate).format("MMMM D, YYYY hh:mmA")}
                   </TableCell>
                   <TableCell align="right">
